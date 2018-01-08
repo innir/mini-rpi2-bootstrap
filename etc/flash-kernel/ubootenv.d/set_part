@@ -1,0 +1,2 @@
+# Kernel image is on partition 2
+setenv distro_bootpart 2

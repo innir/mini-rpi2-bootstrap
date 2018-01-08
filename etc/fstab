@@ -1,0 +1,5 @@
+#<file system>		<mount point>	<type>	<options>		<dump>	<pass>
+/dev/mapper/root	/	        	ext4	noatime,defaults	0	1
+/dev/mmcblk0p2		/boot   		ext4	noatime,defaults	0	0
+/dev/mmcblk0p1		/boot/firmware	vfat	defaults	    	0	0
+

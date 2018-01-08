@@ -1,0 +1,14 @@
+#!/bin/sh
+
+BOOTDIR="/boot/firmware"
+
+wget -O "${BOOTDIR}/bootcode.bin" https://github.com/raspberrypi/firmware/raw/master/boot/bootcode.bin
+wget -O "${BOOTDIR}/fixup.dat" https://github.com/raspberrypi/firmware/raw/master/boot/fixup.dat
+wget -O "${BOOTDIR}/fixup_cd.dat" https://github.com/raspberrypi/firmware/raw/master/boot/fixup_cd.dat
+wget -O "${BOOTDIR}/fixup_db.dat" https://github.com/raspberrypi/firmware/raw/master/boot/fixup_db.dat
+wget -O "${BOOTDIR}/fixup_x.dat" https://github.com/raspberrypi/firmware/raw/master/boot/fixup_x.dat
+wget -O "${BOOTDIR}/start.elf" https://github.com/raspberrypi/firmware/raw/master/boot/start.elf
+wget -O "${BOOTDIR}/start_cd.elf" https://github.com/raspberrypi/firmware/raw/master/boot/start_cd.elf
+wget -O "${BOOTDIR}/start_db.elf" https://github.com/raspberrypi/firmware/raw/master/boot/start_db.elf
+wget -O "${BOOTDIR}/start_x.elf" https://github.com/raspberrypi/firmware/raw/master/boot/start_x.elf
+

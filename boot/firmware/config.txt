@@ -1,0 +1,5 @@
+arm_freq=1000
+sdram_freq=500
+over_voltage=2
+gpu_mem=16
+kernel=u-boot.bin
