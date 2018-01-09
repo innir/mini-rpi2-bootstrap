@@ -22,11 +22,12 @@ DIR=${DIR:="image"}
 QEMU_BINARY=${QEMU_BINARY:="/usr/bin/qemu-arm-static"}
 DEFLOCAL=${DEFLOCAL:="de_DE.UTF-8"}
 TIMEZONE=${TIMEZONE:="Europe/Berlin"}
-# Install some packages already during bootstrap
-EARLY_PACKAGES=${EARLY_PACKAGES:="apt-transport-https,console-setup,flash-kernel,locales,u-boot-rpi,u-boot-tools"}
-# Only install them afer copying all modifications
+# Install these packages already during bootstrap to be able to tweak their
+# configuration before installing the other packages
+EARLY_PACKAGES="apt-transport-https,console-setup,flash-kernel,locales,u-boot-rpi,u-boot-tools"
+# Only install these packages afer copying all modifications
 PACKAGES=${PACKAGES:="cryptsetup linux-image-armmp rng-tools ssh wget"}
-# Some extra packages to install
+# Packages to customize the system
 CUSTOM_PACKAGES=${CUSTOM_PACKAGES:=""}
 ### End config parameters
 

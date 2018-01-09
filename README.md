@@ -19,8 +19,23 @@ On Debian you need to install these packages:
 ## Customizing the script
 
 In the script `rpi2_bootstrap.sh` you find some variables to change timezone,
-locale, installed packages and the like, they should be pretty self explanatory.
-To change them create a file `config` and define them there as you like.
+locale, installed packages and the like. To change them create a file `config`
+and define them there as you like.
+
+#### Configuration parameters
+
+* `DIR` = Path of the resulting system
+  - Default: `"image"`
+* `QEMU_BINARY` = Full path of `qemu-arm-static`
+  - Default: `"/usr/bin/qemu-arm-static"`
+* `DEFLOCAL` = Default locale of the system
+  - Default: `"de_DE.UTF-8"`
+* `TIMEZONE` = Timezone of the system
+  - Default: `"Europe/Berlin"`
+* `PACKAGES` = Default package set (you will rarely need to change these)
+  - Default: `"cryptsetup linux-image-armmp rng-tools ssh wget"`
+* `CUSTOM_PACKAGES` = Put all packages you want to install additionally here
+  - Default: `""`
 
 To do further customization you can add and/or modify files in the directories
 `boot`, `etc` and `usr`. Their content is copied into the resulting system.
