@@ -11,6 +11,7 @@ chroot_exec() {
   LANG=C LC_ALL=C DEBIAN_FRONTEND=noninteractive chroot ${DIR} $*
 }
 
+### Begin config parameters
 DIR=image
 QEMU_BINARY=/usr/bin/qemu-arm-static
 DEFLOCAL="de_DE.UTF-8"
@@ -21,7 +22,7 @@ EARLY_PACKAGES=apt-transport-https,flash-kernel,locales,u-boot-rpi,u-boot-tools
 PACKAGES="cryptsetup linux-image-armmp rng-tools ssh wget"
 # Some extra packages to install
 CUSTOM_PACKAGES="antiword apt-listchanges aspell-de aspell-en build-essential devscripts docx2txt git htop iotop iptables iputils-ping logrotate logwatch lsof mc mutt nano odt2txt pass sudo sysfsutils unattended-upgrades"
-
+### End config parameters
 
 # Base debootstrap (unpack only)
 debootstrap --arch=armhf --foreign --include="${EARLY_PACKAGES}" stretch "${DIR}" https://deb.debian.org/debian/
@@ -72,6 +73,9 @@ chroot_exec systemctl enable systemd-networkd
 chroot_exec systemctl enable systemd-resolved
 rm -f "${DIR}/etc/resolv.conf"
 chroot_exec ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+# Enable serial console
+chroot_exec systemctl enable serial-getty\@ttyAMA0.service
 
 # Clean up all temporary mount points
 echo "removing temporary mount points ..."
