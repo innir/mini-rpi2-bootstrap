@@ -64,8 +64,11 @@ chroot_exec apt update
 chroot_exec apt dist-upgrade -y
 # Install the rest of the packages
 chroot_exec apt install -y ${PACKAGES} ${CUSTOM_PACKAGES}
+# Removing unused packages and cleaning the apt cache
+chroot_exec apt autoremove
+chroot_exec apt clean
 
-# Download current firmware
+# Download current Raspberry Pi 2 firmware
 chroot_exec fw-update
 
 # Setting up the network
