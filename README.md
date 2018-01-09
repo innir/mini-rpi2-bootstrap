@@ -44,8 +44,12 @@ The approach relies on a three partition layout of the sdcard:
 * `/dev/mmcblk0p1`, *Firmware partition*, VFAT, ~50 MB
 * `/dev/mmcblk0p2`, *Boot partition*, EXT4, ~100 MB
 * `/dev/mmcblk0p3`, *Encrypted root partition*, LUKS, > 1 GB
-  - It's assumed that a EXT4 file system exists within the LUKS partition which
-    is accessible as `/dev/mapper/root`
+  - It's assumed that an EXT4 filesystem exists on the LUKS partition which is
+    accessible as `/dev/mapper/root`
+
+The partition names above are the ones you'll see on your Raspberry Pi 2. On
+the computer you prepare the sdcard on they will probably be `/dev/sdc[123]` or
+the like, adapt the names accordingly.
 
 
 ## Copying the bits to your sdcard
@@ -58,7 +62,7 @@ The easiest way to achieve this is to mount the partitions as follows and use
 rsync to copy the data:
 
 ```
-mkdir sdcard
+mkdir sdcard sdcard/boot sdcard/boot/firmware
 sudo mount /dev/mapper/root sdcard
 sudo mount /dev/mmcblk0p1 sdcard/boot
 sudo mount /dev/mmcblk0p2 sdcard/boot/firmware
