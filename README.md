@@ -27,7 +27,7 @@ To do further customization you can add and/or modify files in the directories
 
 # Bootstrapping
 
-To bootstrap the whole thing into directory `DIR`, run:
+To bootstrap the whole thing into directory `${DIR}`, run:
 
 ```
 sudo ./rpi2_bootstrap.sh
@@ -38,7 +38,15 @@ sudo ./rpi2_bootstrap.sh
 
 You should now set a root password:
 
-`passwd --root DIR root`
+```
+mount -t proc none "${DIR}/proc"
+mount -t sysfs none "${DIR}/sys"
+
+sudo chroot "${DIR}" passwd
+
+sudo umount "${DIR}/proc" "${DIR}/sys"
+
+```
 
 
 ## Partitioning your sdcard
@@ -67,7 +75,7 @@ mount /dev/mapper/root sdcard
 mount /dev/mmcblk0p1 sdcard/boot
 mount /dev/mmcblk0p2 sdcard/boot/firmware
 
-rsync -a DIR/ sdcard/
+rsync -a ${DIR}/ sdcard/
 ```
 
 
@@ -84,6 +92,8 @@ exit
 
 After booting the Raspberry Pi you have to fix the initramfs:
 
-`update-initramfs -k all`
+```
+update-initramfs -k all
+```
 
 Reboot to check if everything works.
