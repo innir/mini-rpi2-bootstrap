@@ -23,7 +23,7 @@ QEMU_BINARY=${QEMU_BINARY:="/usr/bin/qemu-arm-static"}
 DEFLOCAL=${DEFLOCAL:="de_DE.UTF-8"}
 TIMEZONE=${TIMEZONE:="Europe/Berlin"}
 # Install some packages already during bootstrap
-EARLY_PACKAGES=${EARLY_PACKAGES:="apt-transport-https,flash-kernel,locales,u-boot-rpi,u-boot-tools"}
+EARLY_PACKAGES=${EARLY_PACKAGES:="apt-transport-https,console-setup,flash-kernel,locales,u-boot-rpi,u-boot-tools"}
 # Only install them afer copying all modifications
 PACKAGES=${PACKAGES:="cryptsetup linux-image-armmp rng-tools ssh wget"}
 # Some extra packages to install
@@ -56,14 +56,24 @@ if [ -d "${DIR}/dev/pts" ] ; then
   mount --bind /dev/pts "${DIR}/dev/pts"
 fi
 
-# Setting up timezone and locales
+# Setting up timezone and ntp
 echo ${TIMEZONE} > "${DIR}/etc/timezone"
 chroot_exec systemctl enable systemd-timesyncd
+
+# Generate locales for en_US.UTF-8 and the default locale
 chroot_exec echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8, ${DEFLOCAL} UTF-8" | debconf-set-selections
 sed -i "/en_US.UTF-8/s/^#//" "${DIR}/etc/locale.gen"
 sed -i "/${DEFLOCAL}/s/^#//" "${DIR}/etc/locale.gen"
 chroot_exec locale-gen
 chroot_exec update-locale LANG="${DEFLOCAL}"
+
+# Set keyboard layout to default locale
+KEB="${DEFLOCAL%%"${DEFLOCAL#??}"}" # get the first two chars from ${DEFLOCAL}
+sed -i "s/^XKBLAYOUT.*/XKBLAYOUT=\"${KEB}\"/" "${DIR}/etc/default/keyboard"
+
+# Set the charmap to UTF-8
+chroot_exec echo "console-setup console-setup/charmap47 select UTF-8" | debconf-set-selections
+sed -i 's/^CHARMAP.*/CHARMAP="UTF-8"/' "${DIR}/etc/default/console-setup"
 
 # Update package lists and installed packages
 chroot_exec apt update
