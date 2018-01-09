@@ -20,6 +20,7 @@ On Debian you need to install these packages:
 
 In the script `rpi2_bootstrap.sh` you find some variables to change timezone,
 locale, installed packages and the like, they should be pretty self explanatory.
+To change them create a file `config` and define them there as you like.
 
 To do further customization you can add and/or modify files in the directories
 `boot`, `etc` and `usr`. Their content is copied into the resulting system.

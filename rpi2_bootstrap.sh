@@ -11,17 +11,23 @@ chroot_exec() {
   LANG=C LC_ALL=C DEBIAN_FRONTEND=noninteractive chroot ${DIR} $*
 }
 
+# Load config file if present
+if [ -r "./config" ] ; then
+  echo "Loading local config ..."
+  . ./config
+fi
+
 ### Begin config parameters
-DIR=image
-QEMU_BINARY=/usr/bin/qemu-arm-static
-DEFLOCAL="de_DE.UTF-8"
-TIMEZONE="Europe/Berlin"
+DIR=${DIR:="image"}
+QEMU_BINARY=${QEMU_BINARY:="/usr/bin/qemu-arm-static"}
+DEFLOCAL=${DEFLOCAL:="de_DE.UTF-8"}
+TIMEZONE=${TIMEZONE:="Europe/Berlin"}
 # Install some packages already during bootstrap
-EARLY_PACKAGES=apt-transport-https,flash-kernel,locales,u-boot-rpi,u-boot-tools
+EARLY_PACKAGES=${EARLY_PACKAGES:="apt-transport-https,flash-kernel,locales,u-boot-rpi,u-boot-tools"}
 # Only install them afer copying all modifications
-PACKAGES="cryptsetup linux-image-armmp rng-tools ssh wget"
+PACKAGES=${PACKAGES:="cryptsetup linux-image-armmp rng-tools ssh wget"}
 # Some extra packages to install
-CUSTOM_PACKAGES="antiword apt-listchanges aspell-de aspell-en build-essential devscripts docx2txt git htop iotop iptables iputils-ping logrotate logwatch lsof mc mutt nano odt2txt pass sudo sysfsutils unattended-upgrades"
+CUSTOM_PACKAGES=${CUSTOM_PACKAGES:=""}
 ### End config parameters
 
 # Base debootstrap (unpack only)
