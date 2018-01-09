@@ -3,7 +3,7 @@
 The script bootstraps Debian Stretch, sets up the most important bits and makes
 it easy to run an full encrypted unmodified Debian on the Raspberry Pi 2.
 
-The resulting system is *very* basic, you need to be able to secure it, to add 
+The resulting system is *very* basic, you need to be able to secure it, to add
 users etc.
 
 
@@ -27,26 +27,14 @@ To do further customization you can add and/or modify files in the directories
 
 # Bootstrapping
 
-To bootstrap the whole thing into directory `${DIR}`, run:
+To bootstrap the whole thing into directory `DIR`, run:
 
 ```
 sudo ./rpi2_bootstrap.sh
 ```
 
-
-## Setting a root password
-
-You should now set a root password:
-
-```
-mount -t proc none "${DIR}/proc"
-mount -t sysfs none "${DIR}/sys"
-
-sudo chroot "${DIR}" passwd
-
-sudo umount "${DIR}/proc" "${DIR}/sys"
-
-```
+At the end of the bootstrapping process you will be asked to choose a root
+password.
 
 
 ## Partitioning your sdcard
@@ -71,11 +59,11 @@ rsync to copy the data:
 
 ```
 mkdir sdcard
-mount /dev/mapper/root sdcard
-mount /dev/mmcblk0p1 sdcard/boot
-mount /dev/mmcblk0p2 sdcard/boot/firmware
+sudo mount /dev/mapper/root sdcard
+sudo mount /dev/mmcblk0p1 sdcard/boot
+sudo mount /dev/mmcblk0p2 sdcard/boot/firmware
 
-rsync -a ${DIR}/ sdcard/
+sudo rsync -a DIR/ sdcard/
 ```
 
 
@@ -96,4 +84,4 @@ After booting the Raspberry Pi you have to fix the initramfs:
 update-initramfs -k all
 ```
 
-Reboot to check if everything works.
+Reboot and check if everything works.

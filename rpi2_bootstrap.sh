@@ -77,6 +77,11 @@ chroot_exec ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 # Enable serial console
 chroot_exec systemctl enable serial-getty\@ttyAMA0.service
 
+# Setting a password for root
+echo ""
+echo "Choose a password for 'root' ..."
+chroot_exec passwd
+
 # Clean up all temporary mount points
 echo "removing temporary mount points ..."
 umount -l "${DIR}/proc" 2> /dev/null
