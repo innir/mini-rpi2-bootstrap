@@ -1,2 +1,2 @@
-LINUX_KERNEL_CMDLINE="console=ttyAMA0,115200 cryptdevice=/dev/mmcblk0p3:root root=/dev/mapper/root rootfstype=ext4 elevator=deadline rootwait"
+LINUX_KERNEL_CMDLINE="console=ttyAMA0,115200 cryptdevice=/dev/mmcblk0p3:root root=/dev/mapper/root rootfstype=ext4 elevator=deadline rootwait apparmor=1 security=apparmor"
 LINUX_KERNEL_CMDLINE_DEFAULTS=""
